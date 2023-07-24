@@ -3,12 +3,13 @@ package PageObjects;
 import BasePackage.BaseClassFMS;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-public class ListOfPublishersPage extends BaseClassFMS {
+public class ListOfPublishersPage {
     @FindBy(id = "add_publisher")
     WebElement addPublisherBtn;
 
@@ -16,7 +17,11 @@ public class ListOfPublishersPage extends BaseClassFMS {
     WebElement publisherSearchBox;
 
     String NumberOfBooks_Index = "3";
-    public ListOfPublishersPage(){
+
+    WebDriver driver;
+
+    public ListOfPublishersPage(WebDriver driver){
+        this.driver=driver;
         PageFactory.initElements(driver,this);
     }
 
