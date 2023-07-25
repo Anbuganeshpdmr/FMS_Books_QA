@@ -3,10 +3,7 @@ package PageObjects;
 import BasePackage.BaseClassFMS;
 
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -16,7 +13,7 @@ import java.time.Duration;
 import java.util.Properties;
 
 
-public class AddBookPage extends BaseClassFMS {
+public class AddBookPage  {
 
 
     @FindBy(id="received_date")
@@ -71,13 +68,16 @@ public class AddBookPage extends BaseClassFMS {
     WebElement resetBook;
 
     Properties bookProp;
-    public AddBookPage(){
+    WebDriver driver;
+    public AddBookPage(WebDriver driver){
+        this.driver=driver;
+
         PageFactory.initElements(driver, this);
     }
 
 
 
-    public void addNewBook(String receivedDate_, String publisherIndex_, String bookName_, String noOfChapters_,
+    public void addNewBook(String receivedDate_, String publisherName_, String bookName_, String noOfChapters_,
                            String isbnNumber_, String typeOfBook_, String complexityLevel_, String bookColour_,
                            String priority_, String CEReceivedDate_, String clientDueDate_, String pdmrPlanDate_,
                            String stages_) throws InterruptedException {
@@ -87,9 +87,54 @@ public class AddBookPage extends BaseClassFMS {
 
         receivedDate.sendKeys(receivedDate_+ Keys.ENTER);
 
-        int pubIndex = Integer.parseInt(publisherIndex_.trim());
         Select pubSelect = new Select(selectPublisher);
-        pubSelect.selectByIndex(pubIndex);
+        pubSelect.selectByVisibleText(publisherName_);
+
+        Thread.sleep(1500);
+
+        bookName.sendKeys(bookName_);
+
+        noOfChapters.sendKeys(noOfChapters_);
+
+        Thread.sleep(1500);
+        isbnNumber.sendKeys(isbnNumber_);
+
+        Select typeOfBookSelect = new Select(typeOfBook);
+        typeOfBookSelect.selectByValue(typeOfBook_);
+
+        Select compLevelSelect = new Select(complexityLevel);
+        compLevelSelect.selectByValue(complexityLevel_);
+
+        Thread.sleep(1500);
+        Select bookColourSelect = new Select(bookColour);
+        bookColourSelect.selectByValue(bookColour_);
+
+        Select prioritySelect = new Select(priority);
+        prioritySelect.selectByValue(priority_);
+
+        editingReceivedDate.sendKeys(CEReceivedDate_+ Keys.ENTER);
+        Thread.sleep(1500);
+        dueDate.sendKeys(clientDueDate_+ Keys.ENTER);
+
+        pdmrPlanDate.sendKeys(pdmrPlanDate_+ Keys.ENTER);
+
+        Select stagesSelect = new Select(bookStage);
+        stagesSelect.selectByValue(stages_);
+
+    }
+
+    public void addNewBook(String receivedDate_, int publisherIndex_, String bookName_, String noOfChapters_,
+                           String isbnNumber_, String typeOfBook_, String complexityLevel_, String bookColour_,
+                           String priority_, String CEReceivedDate_, String clientDueDate_, String pdmrPlanDate_,
+                           String stages_) throws InterruptedException {
+
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+
+        receivedDate.sendKeys(receivedDate_+ Keys.ENTER);
+
+        Select pubSelect = new Select(selectPublisher);
+        pubSelect.selectByIndex(publisherIndex_);
 
         Thread.sleep(1500);
 
@@ -209,6 +254,10 @@ public class AddBookPage extends BaseClassFMS {
         Select pubSelect = new Select(selectPublisher);
         Thread.sleep(2000);
         return pubSelect.getFirstSelectedOption().getText();
+    }
+
+    public String getBookname(){
+        return driver.findElement(By.id("book_name")).getText();
     }
 
 }
