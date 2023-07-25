@@ -68,102 +68,104 @@ public class AddBookPage {
     WebElement resetBook;
 
     WebDriver driver;
+  
     public AddBookPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public void addNewBook(String receivedDate_, String publisherIndex_, String bookName_, String noOfChapters_,
-                           String isbnNumber_, String typeOfBook_, String complexityLevel_, String bookColour_,
-                           String priority_, String CEReceivedDate_, String clientDueDate_, String pdmrPlanDate_,
-                           String stages_) throws InterruptedException {
+    public void addNewBook(String receivedDate_, String publisherName_, String bookName_, String noOfChapters_,
+                       String isbnNumber_, String typeOfBook_, String complexityLevel_, String bookColour_,
+                       String priority_, String CEReceivedDate_, String clientDueDate_, String pdmrPlanDate_,
+                       String stages_) throws InterruptedException {
 
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
-        receivedDate.sendKeys(receivedDate_+ Keys.ENTER);
+    receivedDate.sendKeys(receivedDate_+ Keys.ENTER);
 
-        Select pubSelect = new Select(selectPublisher);
-        pubSelect.selectByVisibleText(publisherIndex_);
+    Select pubSelect = new Select(selectPublisher);
+    pubSelect.selectByVisibleText(publisherName_);
 
-        Thread.sleep(1500);
+    Thread.sleep(1500);
 
-        bookName.sendKeys(bookName_);
+    bookName.sendKeys(bookName_);
 
-        noOfChapters.sendKeys(noOfChapters_);
+    noOfChapters.sendKeys(noOfChapters_);
 
-        Thread.sleep(1500);
-        isbnNumber.sendKeys(isbnNumber_);
+    Thread.sleep(1500);
+    isbnNumber.sendKeys(isbnNumber_);
 
-        Select typeOfBookSelect = new Select(typeOfBook);
-        typeOfBookSelect.selectByValue(typeOfBook_);
+    Select typeOfBookSelect = new Select(typeOfBook);
+    typeOfBookSelect.selectByValue(typeOfBook_);
 
-        Select compLevelSelect = new Select(complexityLevel);
-        compLevelSelect.selectByValue(complexityLevel_);
+    Select compLevelSelect = new Select(complexityLevel);
+    compLevelSelect.selectByValue(complexityLevel_);
 
-        Thread.sleep(1500);
-        Select bookColourSelect = new Select(bookColour);
-        bookColourSelect.selectByValue(bookColour_);
+    Thread.sleep(1500);
+    Select bookColourSelect = new Select(bookColour);
+    bookColourSelect.selectByValue(bookColour_);
 
-        Select prioritySelect = new Select(priority);
-        prioritySelect.selectByValue(priority_);
+    Select prioritySelect = new Select(priority);
+    prioritySelect.selectByValue(priority_);
 
-        editingReceivedDate.sendKeys(CEReceivedDate_+ Keys.ENTER);
-        Thread.sleep(1500);
-        dueDate.sendKeys(clientDueDate_+ Keys.ENTER);
+    editingReceivedDate.sendKeys(CEReceivedDate_+ Keys.ENTER);
+    Thread.sleep(1500);
+    dueDate.sendKeys(clientDueDate_+ Keys.ENTER);
 
-        pdmrPlanDate.sendKeys(pdmrPlanDate_+ Keys.ENTER);
+    pdmrPlanDate.sendKeys(pdmrPlanDate_+ Keys.ENTER);
 
-        Select stagesSelect = new Select(bookStage);
-        stagesSelect.selectByValue(stages_);
+    Select stagesSelect = new Select(bookStage);
+    stagesSelect.selectByValue(stages_);
 
     }
 
     public void addNewBook(String receivedDate_, int publisherIndex_, String bookName_, String noOfChapters_,
-                           String isbnNumber_, String typeOfBook_, String complexityLevel_, String bookColour_,
-                           String priority_, String CEReceivedDate_, String clientDueDate_, String pdmrPlanDate_,
-                           String stages_) throws InterruptedException {
+                       String isbnNumber_, String typeOfBook_, String complexityLevel_, String bookColour_,
+                       String priority_, String CEReceivedDate_, String clientDueDate_, String pdmrPlanDate_,
+                       String stages_) throws InterruptedException {
 
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
-        receivedDate.sendKeys(receivedDate_+ Keys.ENTER);
+    receivedDate.sendKeys(receivedDate_+ Keys.ENTER);
 
-        Select pubSelect = new Select(selectPublisher);
-        pubSelect.selectByIndex(publisherIndex_);
+    Select pubSelect = new Select(selectPublisher);
+    pubSelect.selectByIndex(publisherIndex_);
 
-        Thread.sleep(1500);
+    Thread.sleep(1500);
 
-        bookName.sendKeys(bookName_);
+    bookName.sendKeys(bookName_);
 
-        noOfChapters.sendKeys(noOfChapters_);
+    noOfChapters.sendKeys(noOfChapters_);
 
-        Thread.sleep(1500);
-        isbnNumber.sendKeys(isbnNumber_);
+    Thread.sleep(1500);
+    isbnNumber.sendKeys(isbnNumber_);
 
-        Select typeOfBookSelect = new Select(typeOfBook);
-        typeOfBookSelect.selectByValue(typeOfBook_);
+    Select typeOfBookSelect = new Select(typeOfBook);
+    typeOfBookSelect.selectByValue(typeOfBook_);
 
-        Select compLevelSelect = new Select(complexityLevel);
-        compLevelSelect.selectByValue(complexityLevel_);
+    Select compLevelSelect = new Select(complexityLevel);
+    compLevelSelect.selectByValue(complexityLevel_);
 
-        Thread.sleep(1500);
-        Select bookColourSelect = new Select(bookColour);
-        bookColourSelect.selectByValue(bookColour_);
+    Thread.sleep(1500);
+    Select bookColourSelect = new Select(bookColour);
+    bookColourSelect.selectByValue(bookColour_);
 
-        Select prioritySelect = new Select(priority);
-        prioritySelect.selectByValue(priority_);
+    Select prioritySelect = new Select(priority);
+    prioritySelect.selectByValue(priority_);
 
-        editingReceivedDate.sendKeys(CEReceivedDate_+ Keys.ENTER);
-        Thread.sleep(1500);
-        dueDate.sendKeys(clientDueDate_+ Keys.ENTER);
+    editingReceivedDate.sendKeys(CEReceivedDate_+ Keys.ENTER);
+    Thread.sleep(1500);
+    dueDate.sendKeys(clientDueDate_+ Keys.ENTER);
 
-        pdmrPlanDate.sendKeys(pdmrPlanDate_+ Keys.ENTER);
+    pdmrPlanDate.sendKeys(pdmrPlanDate_+ Keys.ENTER);
 
-        Select stagesSelect = new Select(bookStage);
-        stagesSelect.selectByValue(stages_);
+    Select stagesSelect = new Select(bookStage);
+    stagesSelect.selectByValue(stages_);
 
     }
+
 
     public void addFileForNewBook(String fileFullPath) throws InterruptedException {
 
@@ -253,6 +255,10 @@ public class AddBookPage {
         Select pubSelect = new Select(selectPublisher);
         Thread.sleep(2000);
         return pubSelect.getFirstSelectedOption().getText();
+    }
+
+    public String getBookname(){
+        return driver.findElement(By.id("book_name")).getText();
     }
 
 }

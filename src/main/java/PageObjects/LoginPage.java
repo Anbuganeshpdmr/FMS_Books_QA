@@ -39,28 +39,6 @@ public class LoginPage  {
         loginBtn.click();
     }
 
-    /*public void loginAsPaginationTL() throws InterruptedException {
-
-        String paginationTLId = prop1.getProperty("PaginationTLId");
-
-        usernameBox.sendKeys(paginationTLId);
-        passwordBox.sendKeys(paginationTLId);
-        loginBtn.click();
-
-        Thread.sleep(2000);
-    }
-
-    public void loginAsPaginationUser() throws InterruptedException {
-
-        String paginationUserId = prop1.getProperty("PaginationUserId");
-
-        usernameBox.sendKeys(paginationUserId);
-        passwordBox.sendKeys(paginationUserId);
-        loginBtn.click();
-
-        Thread.sleep(2000);
-    }*/
-
     public void loginToApplication(String username, String password) throws InterruptedException {
 
         usernameBox.sendKeys(username);
@@ -69,9 +47,7 @@ public class LoginPage  {
 
         Thread.sleep(2000);
     }
-
-    public String getPageTitle(){
-        return driver.getTitle();
-    }
-
 }
+
+
+

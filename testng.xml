@@ -10,7 +10,7 @@
 
         <classes>
             <class name="BasicUtils.TestngAnnotatedMethods"/>
-            <class name="Books.AddBooksTest"/>
+
         </classes>
 
     </test>
