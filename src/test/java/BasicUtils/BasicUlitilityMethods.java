@@ -1,8 +1,7 @@
 package BasicUtils;
 
 
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
@@ -78,8 +77,143 @@ public class BasicUlitilityMethods {
             fileName = mostRecentFile.getName();
 
         }
-
         return fileName;
+    }
 
+    public static String deleteFileFromLocation(String filePath, String fileName){
+
+        File file = new File(filePath, fileName);
+
+        // Check if the file exists
+        if (file.exists()) {
+            // Attempt to delete the file
+            if (file.delete()) {
+                return "File deleted successfully";
+            } else {
+                return "Failed to delete the file";
+            }
+        } else {
+            return "File not found";
+        }
+    }
+
+    public static String deleteFileFromDownloads(String fileName){
+
+        String filePath = System.getProperty("user.home") + "/Downloads";
+        File file = new File(filePath, fileName);
+
+        // Check if the file exists
+        if (file.exists()) {
+            // Attempt to delete the file
+            if (file.delete()) {
+                return "File deleted successfully";
+            } else {
+                return "Failed to delete the file";
+            }
+        } else {
+            return "File not found";
+        }
+    }
+
+    public static Object[][] readExcelData(String fileName, String sheetName) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(fileName);
+        Workbook workbook = new XSSFWorkbook(fileInputStream);
+        Sheet sheet = workbook.getSheet(sheetName);
+
+        int rowCount = sheet.getLastRowNum();
+        int columnCount = sheet.getRow(0).getLastCellNum();
+
+        Object[][] data = new Object[rowCount][columnCount];
+
+        for (int i = 0; i < rowCount; i++) {
+            Row row = sheet.getRow(i + 1);
+            for (int j = 0; j < columnCount; j++) {
+                Cell cell = row.getCell(j);
+                if (cell == null) {
+                    data[i][j] = "";  // Assign empty string for null cell
+                } else {
+                    try {
+                        // Handle different cell types
+                        switch (cell.getCellType()) {
+                            case BLANK:
+                                data[i][j] = "";
+                                break;
+                            case STRING:
+                                data[i][j] = cell.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                data[i][j] = String.valueOf(cell.getNumericCellValue());
+                                break;
+                            case BOOLEAN:
+                                //data[i][j] = String.valueOf(cell.getBooleanCellValue());
+                                data[i][j] = cell.getBooleanCellValue();
+                                break;
+                            case FORMULA:
+                                data[i][j] = cell.getCellFormula();
+                                break;
+                            default:
+                                data[i][j] = "";
+                        }
+                    } catch (Exception e) {
+                        data[i][j] = "";  // Handle any exception by assigning empty string
+                    }
+                }
+            }
+
+        }
+        workbook.close();
+        fileInputStream.close();
+        return data;
+    }
+
+    public static Object[][] readExcelData(String fileName, int sheetNumber) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(fileName);
+        Workbook workbook = new XSSFWorkbook(fileInputStream);
+        Sheet sheet = workbook.getSheetAt(sheetNumber);
+
+        int rowCount = sheet.getLastRowNum();
+        int columnCount = sheet.getRow(0).getLastCellNum();
+
+        Object[][] data = new Object[rowCount][columnCount];
+
+        for (int i = 0; i < rowCount; i++) {
+            Row row = sheet.getRow(i + 1);
+            for (int j = 0; j < columnCount; j++) {
+                Cell cell = row.getCell(j);
+                if (cell == null) {
+                    data[i][j] = "";  // Assign empty string for null cell
+                } else {
+                    try {
+                        // Handle different cell types
+                        switch (cell.getCellType()) {
+                            case BLANK:
+                                data[i][j] = "";
+                                break;
+                            case STRING:
+                                data[i][j] = cell.getStringCellValue();
+                                break;
+                            case NUMERIC:
+                                data[i][j] = String.valueOf(cell.getNumericCellValue());
+                                break;
+                            case BOOLEAN:
+                                //data[i][j] = String.valueOf(cell.getBooleanCellValue());
+                                data[i][j] = cell.getBooleanCellValue();
+                                break;
+                            case FORMULA:
+                                data[i][j] = cell.getCellFormula();
+                                break;
+                            default:
+                                data[i][j] = "";
+                        }
+                    } catch (Exception e) {
+                        data[i][j] = "";  // Handle any exception by assigning empty string
+                    }
+                }
+            }
+
+        }
+        workbook.close();
+        fileInputStream.close();
+        return data;
     }
 }

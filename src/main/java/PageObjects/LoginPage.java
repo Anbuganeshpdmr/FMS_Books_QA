@@ -23,7 +23,7 @@ public class LoginPage  {
     WebDriver driver;
 
     public LoginPage(WebDriver driver) throws IOException {
-        this.driver=driver;
+        this.driver = driver;
         PageFactory.initElements(driver,this);
     }
 
@@ -47,16 +47,7 @@ public class LoginPage  {
 
         Thread.sleep(2000);
     }
-
-    public String getPageTitle(){
-        return driver.getTitle();
-    }
-    }
-
-
-
-
-
+}
 
 
 

@@ -23,8 +23,10 @@ public class CustomTestListener implements ITestListener {
     @Override
     public void onTestSuccess(ITestResult result) {
 
-        extentTest.pass(result.getName() + " is passed");
+        extentTest.pass("Test is Passed");
         extentTest.assignCategory(result.getMethod().getGroups());
+
+        reloadDashboard();
     }
 
     @Override

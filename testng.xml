@@ -10,10 +10,7 @@
 
         <classes>
             <class name="BasicUtils.TestngAnnotatedMethods"/>
-            <class name="UserProductionEntry.UserStartStopProductionEntry"></class>
-<!--            <class name="ViewChapters.DeleteChapterTest"/>-->
-<!--            <class name="ViewChapters.EditChapterNameTest"></class>-->
-<!--            <class name="ViewChapters.UpdateReorder"></class>-->
+
         </classes>
 
     </test>

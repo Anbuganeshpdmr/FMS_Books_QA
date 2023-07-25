@@ -15,6 +15,8 @@ public class BaseClassFMS {
 
     public static WebDriver driver;
 
+    public static WebDriver driver_user_1,driver_user_2,driver_user_3;
+
     public static Properties prop1;
 
     public static void launchApplication() throws IOException {
