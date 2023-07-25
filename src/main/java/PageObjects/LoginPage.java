@@ -1,13 +1,14 @@
 package PageObjects;
 
 import BasePackage.BaseClassFMS;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.IOException;
 
-public class LoginPage extends BaseClassFMS {
+public class LoginPage  {
 
     //WebDriver driver;
     @FindBy(id="username")
@@ -19,7 +20,10 @@ public class LoginPage extends BaseClassFMS {
     @FindBy(className = "frm-submit")
     WebElement loginBtn;
 
-    public LoginPage() throws IOException {
+    WebDriver driver;
+
+    public LoginPage(WebDriver driver) throws IOException {
+        this.driver = driver;
         PageFactory.initElements(driver,this);
     }
 
@@ -35,7 +39,7 @@ public class LoginPage extends BaseClassFMS {
         loginBtn.click();
     }
 
-    public void loginAsPaginationTL() throws InterruptedException {
+    /*public void loginAsPaginationTL() throws InterruptedException {
 
         String paginationTLId = prop1.getProperty("PaginationTLId");
 
@@ -52,6 +56,15 @@ public class LoginPage extends BaseClassFMS {
 
         usernameBox.sendKeys(paginationUserId);
         passwordBox.sendKeys(paginationUserId);
+        loginBtn.click();
+
+        Thread.sleep(2000);
+    }*/
+
+    public void loginToApplication(String username, String password) throws InterruptedException {
+
+        usernameBox.sendKeys(username);
+        passwordBox.sendKeys(password);
         loginBtn.click();
 
         Thread.sleep(2000);
