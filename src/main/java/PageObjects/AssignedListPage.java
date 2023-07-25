@@ -47,7 +47,7 @@ public class AssignedListPage  {
     public String isDisplayedUserName(String bookname) {
             return driver.findElement(By.xpath("//tbody//td["+chapterNameIndex+"][text()='"+chapterName+"']/../td["+usernameIndex+"][text()='"+username+"']")).getText();
     }
-////************************************************************************tbody//td[3]/a[text()='VC230718183254']/../../td[4][text()='ab']/../td[6][text()='Victor Ellayaraja S']
+
     public String isDisplayedJobtype(String bookname) {
          return driver.findElement(By.xpath("//tbody//td["+chapterNameIndex+"][text()='"+chapterName+"']/../td["+jobtypeIndex+"][text()='"+jobtype+"']")).getText();
 
