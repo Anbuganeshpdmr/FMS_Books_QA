@@ -21,7 +21,7 @@ import static BasicUtils.TestngAnnotatedMethods.extentTest;
 
 public class AddBooksTest extends BaseClassFMS {
 
-    @Test(groups = {"books","smoke","regression"},enabled = false)
+    @Test(groups = {"books","smoke","regression"},enabled = true)
     public void addBooksTest_1() throws InterruptedException, IOException, InvalidFormatException {
         extentTest = extentReports
                 .createTest("Add new book and verify necessary icons are present")
@@ -111,7 +111,7 @@ public class AddBooksTest extends BaseClassFMS {
         extentTest.pass("Download option is NOT available");
     }
 
-    @Test(groups = {"books","regression"},enabled = false)
+    @Test(groups = {"books","regression"},enabled = true)
     public void addBooksTest_2() throws InterruptedException, IOException, InvalidFormatException {
         extentTest = extentReports
                 .createTest("Upload file while adding book and verify by downloading the same")

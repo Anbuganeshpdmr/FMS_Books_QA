@@ -36,6 +36,7 @@ public class TestngAnnotatedMethods extends BaseClassFMS {
     @AfterSuite
     public void closeSuite(){
         extentReports.flush();
+        driver.quit();
     }
 
 

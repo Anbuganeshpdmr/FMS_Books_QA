@@ -2,6 +2,7 @@ package BasePackage;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.BeforeTest;
 
 import java.io.FileInputStream;
@@ -26,6 +27,7 @@ public class BaseClassFMS {
         file.close();
 
         driver = new ChromeDriver();
+        //driver = new EdgeDriver();
         driver.manage().window().maximize();
         driver.get(prop1.getProperty("url"));
     }
