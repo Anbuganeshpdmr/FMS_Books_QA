@@ -1,12 +1,11 @@
 package PageObjects;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import BasePackage.BaseClassFMS;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
+
+import java.util.List;
 
 public class ViewChapterPage {
     String chaptername = "ab";
@@ -23,8 +22,7 @@ public class ViewChapterPage {
     int actionIndex = 10;
 
 
-    @FindBy(xpath = "//button[@id='page_automations_model_open']")
-    WebElement automation;
+
 
     @FindBy(xpath = "//button[text()='Back']")
     WebElement back;
@@ -45,7 +43,43 @@ public class ViewChapterPage {
      * Click automation button
      */
     public void clickAutomationButton() {
-        automation.click();
+        WebElement automationBtn = driver.findElement(By.xpath("//button[@id='page_automations_model_open']"));
+        automationBtn.click();
+    }
+
+    public void runAutomation_JSON(String jsonFilePath) throws InterruptedException {
+        Thread.sleep(2000);
+        WebElement automationBtn = driver.findElement(By.xpath("//button[@id='page_automations_model_open']"));
+        automationBtn.click();
+        Thread.sleep(2000);
+        driver.findElement(By.id("files")).sendKeys(jsonFilePath);
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id='btn_front_end_auto']")).click();
+        Thread.sleep(2000);
+        Assert.assertTrue(driver.findElement(By.xpath("//*[text()='Thanks!']")).isDisplayed());
+        driver.findElement(By.xpath("//*[text()='OK']")).click();
+    }
+
+    public void runAutomation_JSON_ChkErrorMsg(String jsonFilePath) throws InterruptedException {
+        Thread.sleep(2000);
+        WebElement automationBtn = driver.findElement(By.xpath("//button[@id='page_automations_model_open']"));
+        automationBtn.click();
+        Thread.sleep(2000);
+        driver.findElement(By.id("files")).sendKeys(jsonFilePath);
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id='btn_front_end_auto']")).click();
+        Thread.sleep(2000);
+        Assert.assertTrue(driver.findElement(By.xpath("//*[text()='Cancelled']")).isDisplayed(),"No Error message is Displayed!");
+        driver.findElement(By.xpath("//*[text()='OK']")).click();
+    }
+
+    public boolean isAutomationButtonDisplayed() throws InterruptedException {
+        try{
+            Thread.sleep(2000);
+            return driver.findElement(By.xpath("//button[@id='page_automations_model_open']")).isDisplayed();
+        }catch (NoSuchElementException e){
+            return false;
+        }
     }
 
     public void clickBackButton() {
@@ -54,7 +88,8 @@ public class ViewChapterPage {
 
 
     public void searchBoxForChapterList(String chapterName) throws InterruptedException {
-        search.sendKeys(chapterName);
+        search.clear();
+        search.sendKeys(chapterName+ Keys.ENTER);
         Thread.sleep(2000);
     }
 
@@ -260,9 +295,9 @@ public class ViewChapterPage {
     /**
      * "This method is used to verify the chapter presence or not in ChaptersList Page"
      */
-    public boolean isDisplayedchapter() {
+    public boolean isDisplayedchapter(String chapterName) {
         try {
-            return driver.findElement(By.xpath("//tbody//td[" + chapterNameIndex + "]/a[text()='" + chaptername + "']")).isDisplayed();
+            return driver.findElement(By.xpath("//tbody//td[" + chapterNameIndex + "]/a[text()='" + chapterName + "']")).isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -300,12 +335,99 @@ public class ViewChapterPage {
      *
      * @throws InterruptedException
      */
-    public void editMSPageCount(int mspage) throws InterruptedException {
+    public void editMSPageCountAndConfirm(int mspage) throws InterruptedException {
         driver.findElement(By.xpath("//tbody//td[" + chapterNameIndex + "]/a[text()='" + chaptername + "']/ancestor::td/../td[" + actionIndex + "]/i[@class='fa fa-edit edit_chapter']")).click();
         Thread.sleep(2000);
         driver.findElement(By.xpath("//input[@id='chapter_no_mspage']")).clear();
         driver.findElement(By.xpath("//input[@id='chapter_no_mspage']")).sendKeys(String.valueOf(mspage));
         Thread.sleep(2000);
+
+    }
+
+    public void editMSPageCountAndConfirm(String chapterName, String mspage) throws InterruptedException {
+        Thread.sleep(2000);
+        WebElement editChapterIcon = driver.findElement(By.xpath("//tbody//td[" + chapterNameIndex + "]/a[text()='" + chapterName + "']/ancestor::td/../td[" + actionIndex + "]/i[@class='fa fa-edit edit_chapter']"));
+        editChapterIcon.click();
+        Thread.sleep(2000);
+        WebElement mspageBox = driver.findElement(By.xpath("//input[@id='chapter_no_mspage']"));
+        mspageBox.clear();
+        mspageBox.sendKeys(mspage);
+
+    }
+
+    public void editMSPageCountAndConfirm(int chapterNumber, String msPage) throws InterruptedException {
+        Thread.sleep(2000);
+
+        List<WebElement> editChapterIcons = driver.findElements(By.xpath("//*[@class='fa fa-edit edit_chapter']"));
+        WebElement editChapterIcon = editChapterIcons.get(chapterNumber - 1);
+        editChapterIcon.click();
+
+        Thread.sleep(2000);
+
+        WebElement mspageBox = driver.findElement(By.xpath("//input[@id='chapter_no_mspage']"));
+        WebElement updateBtn = driver.findElement(By.id("update_chapter"));
+        mspageBox.clear();
+        mspageBox.sendKeys(msPage);
+        updateBtn.click();
+
+
+    }
+
+    public String getChapterRowColour(int chapterNumber) throws InterruptedException {
+        Thread.sleep(2000);
+
+        WebElement firstCell = driver.findElement(By.xpath("//table[@id='table_book_chapter_list']/tbody/tr["+chapterNumber+"]/td[1]"));
+        return firstCell.getCssValue("background-color");
+
+    }
+
+    public String getGraphicsIconColor(String chapterName){
+        WebElement grpIcon =  driver.findElement(By.xpath("//*[text()='"+chapterName+"']/../..//*[@class='fa fa-image']"));
+        return grpIcon.getCssValue("color");
+    }
+
+    public String getToolTipText(String elementName) throws InterruptedException {
+
+
+        Thread.sleep(2000);
+        WebElement firstElement = null;
+        try {
+
+            if (elementName.equalsIgnoreCase("fresh query icon")) {
+                firstElement = driver.findElement(By.xpath("(//*[@class='ico-item fa fa-question-circle notice-alarm edit_newchapter'])[1]"));
+            } else if (elementName.equalsIgnoreCase("edit icon")) {
+                firstElement = driver.findElement(By.xpath("(//*[@class='fa fa-edit edit_chapter'])[1]"));
+            } else if (elementName.equalsIgnoreCase("delete icon")) {
+                firstElement = driver.findElement(By.xpath("(//*[@class='fa fa-trash delete_chapter_data'])[1]"));
+            } else if (elementName.equalsIgnoreCase("Bell icon")) {
+                firstElement = driver.findElement(By.xpath("(//*[@class='ico-item fa fa-bell notice-alarm query_notifiation'])[1]"));
+            } else if (elementName.equalsIgnoreCase("graphics icon RED")) {
+                firstElement = driver.findElement(By.xpath("(//*[@data-original-title='Graphics Not Approved'])[1]"));
+            } else if (elementName.equalsIgnoreCase("graphics icon BLUE")) {
+                firstElement = driver.findElement(By.xpath("(//*[@data-original-title='Graphics Approved'])[1]"));
+            } else if (elementName.equalsIgnoreCase("proof history icon")) {
+                firstElement = driver.findElement(By.xpath("(//*[@class='fa fa-indent'])[1]"));
+            } else if (elementName.equalsIgnoreCase("retrive chapter icon")) {
+                firstElement = driver.findElement(By.xpath("(//*[@class='fa fa-reply-all page_reallocate'])[1]"));
+            } else if (elementName.equalsIgnoreCase("query history icon")) {
+                firstElement = driver.findElement(By.xpath("(//*[@title='Query History'])[1]"));
+            }
+
+
+            if (firstElement != null) {
+                Actions actions = new Actions(driver);
+                actions.moveToElement(firstElement).perform();
+
+                Thread.sleep(2000);
+                WebElement secondElement = firstElement.findElement(By.xpath("./following-sibling::div/div[@class='tooltip-inner']"));
+                return secondElement.getText();
+
+            }
+        }catch (NoSuchElementException e){
+            Assert.fail("Element is not present or available!! Pls. Check");
+        }
+
+        return "";
 
     }
 
@@ -326,9 +448,11 @@ public class ViewChapterPage {
      * @throws InterruptedException
      */
     public void clickconfirmEditIcon() throws InterruptedException {
-        Thread.sleep(1500);
-        driver.findElement(By.xpath("//*[@id='update_chapter']")).click();
-        Thread.sleep(1500);
+
+        Thread.sleep(2000);
+
+        WebElement confirmBtn = driver.findElement(By.xpath("//*[@id='update_chapter']"));
+        confirmBtn.click();
     }
 
 //   ****************************************************get alert for automation************************************
@@ -391,9 +515,33 @@ public class ViewChapterPage {
     public void clickUpdateReorder() {
         driver.findElement(By.xpath("//button[text()='Update Reorder']")).click();
     }
+
+    public boolean isUpdateReorderBtnDisplayed(){
+        try{
+            return driver.findElement(By.xpath("//button[text()='Update Reorder']")).isDisplayed();
+        }catch (NoSuchElementException e){
+            return false;
+        }
+    }
+
+
     public void clickOkButton()throws InterruptedException{
         Thread.sleep(2000);
         driver.findElement(By.xpath("//button[@class='confirm']")).click();
+    }
+
+    public void clickReorderAndOK() throws InterruptedException {
+        Thread.sleep(2000);
+        clickUpdateReorder();
+        clickOkButton();
+    }
+
+    public void clickReorderButCancel() throws InterruptedException {
+        Thread.sleep(2000);
+        clickUpdateReorder();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[text()='Cancel']")).click();
+        clickOkButton();
     }
 
     public void chapterDragandDrop(String chaptername1, String chaptername2) {
@@ -435,6 +583,40 @@ public class ViewChapterPage {
         driver.findElement(By.xpath("//*[@id='update_chapter']")).click();
         Thread.sleep(1500);
     }
+
+    /**
+     * @return array of current chapter names in order at particular instance - whenever called.
+     */
+    public  String[] getallChaptersNames(){
+        List<WebElement> elements = driver.findElements(By.xpath("//tbody/tr/td[2]/a"));
+
+        String[] chapterNames = new String[elements.size()];
+
+        for(int i=0; i<chapterNames.length; i++){
+
+            WebElement elem = elements.get(i);
+            String ch_name = elem.getText();
+            chapterNames[i] = ch_name;
+        }
+
+        return chapterNames;
+    }
+
+    public int getJumpDist(){
+        WebElement rowCell1 = driver.findElement(By.xpath("//td[text()='1']"));
+        WebElement rowCell2 = driver.findElement(By.xpath("//td[text()='2']"));
+        WebElement rowCell3 = driver.findElement(By.xpath("//td[text()='3']"));
+
+
+        Point p1 = rowCell1.getLocation();
+        Point p2 = rowCell2.getLocation();
+        Point p3 = rowCell3.getLocation();
+
+        int jumpDist = (p2.getY()) - (p1.getY());
+        return jumpDist;
+    }
+
+
 
 
 

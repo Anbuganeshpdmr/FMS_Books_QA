@@ -6,10 +6,11 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.*;
 
 public class ListOfBooksPage {
@@ -66,7 +67,7 @@ public class ListOfBooksPage {
     private void searchBooks(String bookname) throws InterruptedException {
         listOfBooksSearch.clear();
         listOfBooksSearch.sendKeys(bookname+Keys.ENTER);
-        Thread.sleep(1500);
+        //Thread.sleep(1500);
     }
 
     public Map<String, String> getBookDatas(String bookname) throws InterruptedException {
@@ -85,6 +86,11 @@ public class ListOfBooksPage {
         }
 
         return bookDatas;
+    }
+
+    public String getChapterCount(String bookName) throws InterruptedException {
+        Map<String, String> bookData = getBookDatas(bookName);
+        return bookData.get("No of Chapters");
     }
 
     public void navigateToChaptersOptionsPage(String bookname) throws InterruptedException {
@@ -224,11 +230,12 @@ public class ListOfBooksPage {
         Thread.sleep(1000);
         searchBooks(bookName);
         Thread.sleep(1500);
-        Assert.assertTrue(isViewChaptersOptionAvailable(bookName));
+        //Assert.assertTrue(isViewChaptersOptionAvailable(bookName));
+        WebElement eyeIcon = driver.findElement(
+                        By.xpath("//a[text()='"+bookName+"']/../..//i[@class='fa fa-eye']"));
+        Thread.sleep(1500);
+        eyeIcon.click();
 
-        driver.findElement(
-                        By.xpath("//a[text()='"+bookName+"']/../..//i[@class='fa fa-eye']"))
-                .click();
     }
 
     public void downloadFile(String bookName) throws InterruptedException {

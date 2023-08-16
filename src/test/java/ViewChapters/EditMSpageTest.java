@@ -81,14 +81,14 @@ public class EditMSpageTest extends BaseClassFMS {
     }
     @Test
     public void cancelEditMsPage() throws InterruptedException{
-        viewChapterPage.editMSPageCount(mspage);
+        viewChapterPage.editMSPageCountAndConfirm(mspage);
         viewChapterPage.clickcancelEditIcon();
         Thread.sleep(2000);
         Assert.assertFalse(viewChapterPage.isDisplayedMSPage(mspage));
     }
     @Test
     public void confirmEditMsPage() throws InterruptedException{
-        viewChapterPage.editMSPageCount(mspage);
+        viewChapterPage.editMSPageCountAndConfirm(mspage);
         viewChapterPage.clickconfirmEditIcon();
         Assert.assertTrue(viewChapterPage.isDisplayedMSPage(mspage));
 

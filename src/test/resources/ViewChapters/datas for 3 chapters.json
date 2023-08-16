@@ -1,0 +1,23 @@
+[
+    {
+    "Books_anbu_11.docx":     {"no_of_mspage": "30", 
+                            "no_of_table": "1", 
+                            "no_of_figure": "5", 
+                            "chapter_name": "Books_anbu_11"
+                            }
+    },
+    {
+    "Books_anbu_234.docx":     {"no_of_mspage": "50", 
+                            "no_of_table": "3", 
+                            "no_of_figure": "0", 
+                            "chapter_name": "Books_anbu_234"
+                            }
+    },
+    {
+    "Books_anbu_55555.docx":     {"no_of_mspage": "60", 
+                            "no_of_table": "2", 
+                            "no_of_figure": "1", 
+                            "chapter_name": "Books_anbu_55555"
+                            }
+    }    
+]

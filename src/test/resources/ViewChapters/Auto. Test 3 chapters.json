@@ -1,0 +1,23 @@
+[
+    {
+    "ONE.docx":     {"no_of_mspage": "10",
+                            "no_of_table": "10",
+                            "no_of_figure": "10",
+                            "chapter_name": "ONE"
+                            }
+    },
+    {
+    "TWO.docx":     {"no_of_mspage": "40",
+                            "no_of_table": "40",
+                            "no_of_figure": "40",
+                            "chapter_name": "TWO"
+                            }
+    },
+    {
+    "THREE.docx":     {"no_of_mspage": "30",
+                                "no_of_table": "30",
+                                "no_of_figure": "30",
+                                "chapter_name": "THREE"
+                                }
+    }
+]

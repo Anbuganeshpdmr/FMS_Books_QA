@@ -1,16 +1,18 @@
 package BasicUtils;
 
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BasicUlitilityMethods {
 
@@ -215,5 +217,40 @@ public class BasicUlitilityMethods {
         workbook.close();
         fileInputStream.close();
         return data;
+    }
+
+    public static Map<String, HashMap<String, String>> getChapterDataFromJSON(String filePath) throws FileNotFoundException, IOException {
+
+        try (FileReader reader = new FileReader(filePath)) {
+            Gson gson = new Gson();
+            JsonElement jsonElement = gson.fromJson(reader, JsonElement.class);
+
+            Map<String, HashMap<String, String>> chapters = new HashMap<>();
+
+            if (jsonElement.isJsonArray()) {
+                for (JsonElement element : jsonElement.getAsJsonArray()) {
+                    HashMap<String, String> chapter;
+                    if (element.isJsonObject()) {
+
+                        chapter = new HashMap<>();
+
+                        JsonObject jsonObject = element.getAsJsonObject();
+                        //String fileName = jsonObject.entrySet().iterator().next().getKey();
+                        JsonObject data = jsonObject.entrySet().iterator().next().getValue().getAsJsonObject();
+
+                        chapter.put("No. of MS Pages",data.get("no_of_mspage").getAsString());
+                        chapter.put("No. of Tables",data.get("no_of_table").getAsString());
+                        chapter.put("No. of Figures",data.get("no_of_figure").getAsString());
+                        chapter.put("Chapter Name",data.get("chapter_name").getAsString());
+
+                        chapters.put(data.get("chapter_name").getAsString(),chapter);
+                    }
+                }
+            }
+            return chapters;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
